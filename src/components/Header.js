@@ -12,7 +12,11 @@ import { Constants } from 'expo';
 
 const Header = ({ headerText }) => {
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container,
+			Platform.OS === 'ios'
+				? styles.containerIos
+				: styles.containerAndroid]}
+		>
 			<Text style={styles.text}>{headerText}</Text>
 		</View>
 	);
@@ -31,17 +35,22 @@ const styles = StyleSheet.create({
 
 		paddingTop: Platform.OS === 'android' || platformVersion < 11
 			? Constants.statusBarHeight
-			: 0,
+			: Constants.statusBarHeight,
 		paddingBottom: 10,
 
 		borderBottomWidth: StyleSheet.hairlineWidth,
 		backgroundColor: '#f8f8f8',
-		// shadowColor: '#000',
-		// shadowOffset: { width: 0, height: 20 },
-		// shadowOpacity: 0.9,
 
 		elevation: 2,
 		position: 'relative',
+	},
+	containerIos: {
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.2,
+	},
+	containerAndroid: {
+
 	},
 	text: {
 		fontSize: 20,
